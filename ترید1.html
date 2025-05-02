@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمودار تمام صفحه TradingView</title>
+    <style>
+    @font-face {
+        font-family: yasin;
+        src: url(yekan3.ttf);
+    }
+    body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: rgb(61, 26, 26);
+            font-family: yasin;
+            text-align: center;
+        }
+        
+        #tradingview_chart {
+            width: 100%;
+            height: calc(100vh - 80px); /* کاهش ارتفاع برای هدر */
+            min-height: 100%;
+        }
+        
+        h1 { 
+            text-align: center; 
+            color: white; 
+            margin: 0;
+            padding: 10px 0;
+            font-size: 1.5rem;
+        }
+        
+        .header-container {
+            position: relative;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0,0,0,0.7);
+        }
+        
+        #but {
+            width: 60px;
+            height: 60px;
+            border-radius: 100%;
+            padding: 10px; 
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            text-align: center;
+            font-size: 12px;
+            font-family: yasin;
+            font-weight: bold;
+            background-color: aqua;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        /* استایل برای دستگاه‌های با عرض کمتر از 768px (موبایل) */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.2rem;
+                padding: 5px 0;
+                text-align: right;
+            }
+            
+            .header-container {
+                height: 60px;
+            }
+            
+            #but {
+                width: 40px;
+                height: 40px;
+                font-size: 10px;
+                right: 0px;
+                top: 0px;
+
+            }
+            
+            #tradingview_chart {
+                height: calc(100vh - 60px); /* تنظیم مجدد ارتفاع برای هدر کوچکتر */
+            }
+        }
+
+        /* استایل برای دستگاه‌های بسیار کوچک (مثل موبایل‌های قدیمی) */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1rem;
+                margin-right: 60px; /* فضا برای دکمه */
+            }
+            
+            #but {
+                width: 40px;
+                height: 40px;
+                font-size: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <h1>پلتفرم یاسین تحلیل بازار ارز دیجیتال</h1>
+        <a id="but" target="_blank" href="ترید.html">ابزار تحلیل</a>
+    </div>
+    
+    <div id="tradingview_chart"></div>
+    
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script type="text/javascript">
+        new TradingView.widget({
+            "autosize": true,
+            "symbol": "BINANCE:BTCUSDT",
+            "interval": "1D",
+            "timezone": "Asia/Tehran",
+            "theme": "dark",
+            "style": "1",
+            "locale": "fa_IR",
+            "toolbar_bg": "#1e222d",
+            "enable_publishing": false,
+            "hide_top_toolbar": false,
+            "allow_symbol_change": true,
+            "container_id": "tradingview_chart",
+            "fullscreen": true,
+            "studies": [
+                "MACD@tv-basicstudies",
+                "RSI@tv-basicstudies"
+            ],
+            "disabled_features": ["header_widget"],
+            "overrides": {
+                "paneProperties.background": "#3D1A1A" // هماهنگی با رنگ پس‌زمینه سایت
+            }
+        });
+
+        // تنظیم مجدد سایز چارت هنگام تغییر اندازه پنجره
+        window.addEventListener('resize', function() {
+            if (typeof TradingView !== 'undefined' && TradingView.widget) {
+                TradingView.widget.refresh();
+            }
+        });
+    </script>
+</body>
+</html>
